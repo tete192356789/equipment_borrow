@@ -2,73 +2,73 @@ from django.db import models
 
 # Create your models here.
 
-class Borrow_statuses(models.Model):
+class Borrow_statuse(models.Model):
     b_status_id = models.AutoField(primary_key=True)
     b_status_name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.b_status_name
     
-class User_privileges(models.Model):
+class User_privilege(models.Model):
     p_id = models.AutoField(primary_key=True)
     p_name = models.CharField(max_length=100)
     def __str__(self):
         return self.p_name
 
-class Departments(models.Model):
+class Department(models.Model):
     d_id = models.AutoField(primary_key=True)
     d_name = models.CharField(max_length=100)
     def __str__(self):
         return self.d_name
 
-class Faculties(models.Model):
+class Facultie(models.Model):
     f_id = models.AutoField(primary_key=True)
     f_name = models.CharField(max_length=100)
     def __str__(self):
         return self.f_name
 
-class Id_types(models.Model):
+class Id_type(models.Model):
     t_id = models.AutoField(primary_key=True)
     t_name = models.CharField(max_length=100)
     def __str__(self):
         return self.t_name
 
-class Item_categories(models.Model):
+class Item_categorie(models.Model):
     item_cate_id = models.AutoField(primary_key=True)
     item_cate_name =models.CharField(max_length=100)
     def __str__(self):
         return self.item_cate_name
     
-class Item_statuses(models.Model):
+class Item_statuse(models.Model):
     item_status_id = models.AutoField(primary_key=True)
     item_status_name = models.CharField(max_length=100)
     def __str__(self):
         return self.item_status_name
 
-class Users(models.Model):
+class User(models.Model):
     u_id = models.AutoField(primary_key=True)
     u_name = models.CharField(max_length=100,unique = True)
     u_password = models.CharField(max_length=100)
     u_email = models.EmailField(max_length=100)
     u_tel = models.IntegerField()
-    u_faculty = models.ForeignKey(Faculties,on_delete=models.DO_NOTHING)
-    u_department = models.ForeignKey(Departments, on_delete=models.DO_NOTHING)
-    u_privilege = models.ForeignKey(User_privileges, on_delete=models.DO_NOTHING)
+    u_faculty = models.ForeignKey(Facultie,on_delete=models.DO_NOTHING)
+    u_department = models.ForeignKey(Department, on_delete=models.DO_NOTHING)
+    u_privilege = models.ForeignKey(User_privilege, on_delete=models.DO_NOTHING)
     u_created_at = models.DateTimeField(auto_now_add=True)
     u_updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return "%s %s %s" % (self.u_name,self.faculty,self.department)
-class Items(models.Model):
+class Item(models.Model):
     item_id = models.AutoField(primary_key =True)
-    item_id_type = models.ForeignKey(Id_types, on_delete = models.DO_NOTHING)
+    item_id_type = models.ForeignKey(Id_type, on_delete = models.DO_NOTHING)
     item_name = models.CharField(max_length=100)
-    item_category = models.ForeignKey(Item_categories,on_delete = models.DO_NOTHING)
+    item_category = models.ForeignKey(Item_categorie,on_delete = models.DO_NOTHING)
     item_description = models.TextField()
-    item_faculty = models.ForeignKey(Faculties, on_delete = models.DO_NOTHING)
-    item_department = models.ForeignKey(Departments,on_delete = models.DO_NOTHING)
-    item_status = models.ForeignKey(Item_statuses,on_delete = models.DO_NOTHING)
-    item_borrow_status = models.ForeignKey(Borrow_statuses, on_delete = models.DO_NOTHING)
+    item_faculty = models.ForeignKey(Facultie, on_delete = models.DO_NOTHING)
+    item_department = models.ForeignKey(Department,on_delete = models.DO_NOTHING)
+    item_status = models.ForeignKey(Item_statuse,on_delete = models.DO_NOTHING)
+    item_borrow_status = models.ForeignKey(Borrow_statuse, on_delete = models.DO_NOTHING)
     item_note = models.TextField()
     item_img_id = models.ImageField()  # wait for insert params
     item_created_at = models.DateTimeField(auto_now_add=True)
@@ -81,8 +81,8 @@ class Items(models.Model):
 
 class Borrow_info(models.Model):
     b_id = models.AutoField(primary_key =True)
-    b_item = models.ForeignKey(Items, on_delete=models.CASCADE)
-    b_user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    b_item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    b_user = models.ForeignKey(User, on_delete=models.CASCADE)
     b_location = models.TextField()
     #b_status = models.ForeignKey(Borrow_statuses, on_delete = models.CASCADE)
     b_note = models.TextField()

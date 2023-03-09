@@ -11,7 +11,7 @@ from .serializers import *
 
 # Create your views here.
 def index(request):
-    objs = Items.objects.all().values()
+    objs = Item.objects.all().values()
     json_data = []
     for obj in objs:
         json_data.append(obj)
@@ -20,12 +20,12 @@ def index(request):
 
 @api_view(['GET'])
 def all_faculties(request):
-    allfaculties = Faculties.objects.all()
+    allfaculties = Facultie.objects.all()
     serializer = FacultiesSerializer(allfaculties,many = True)
     return Response(serializer.data,status = status.HTTP_200_OK)
 
 @api_view(['GET'])
 def all_items(request):
-    allitems = Items.objects.all()
+    allitems = Item.objects.all()
     serializer = ItemsSerializer(allitems,many = True)
     return Response(serializer.data,status = status.HTTP_200_OK)
